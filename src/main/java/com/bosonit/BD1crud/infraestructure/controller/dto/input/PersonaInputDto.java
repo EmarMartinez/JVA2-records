@@ -8,23 +8,21 @@ import lombok.NoArgsConstructor;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.Date;
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class PersonaInputDto {
+
+public record PersonaInputDto ( String usuario,
+                                String password,
+                                String name,
+                                String surname,
+                                String company_email,
+                                String personal_email,
+                                String city,
+                                boolean active,
+                                Date created_date,
+                                String imagen_url,
+                                Date termination_date){
 
 
-        private String usuario;
-        private String password;
-        private String name;
-        private String surname;
-        private String company_email;
-        private String personal_email;
-        private String city;
-        private boolean active;
-        private Date created_date;
-        private String imagen_url;
-        private Date termination_date;
+
 
 
 }

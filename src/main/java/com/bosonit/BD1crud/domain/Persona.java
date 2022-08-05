@@ -2,7 +2,9 @@ package com.bosonit.BD1crud.domain;
 
 import com.bosonit.BD1crud.infraestructure.controller.dto.input.PersonaInputDto;
 import com.bosonit.BD1crud.infraestructure.controller.dto.output.PersonaOutputDto;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Id;
 import java.util.Date;
 @Entity
 @Data
-
+@NoArgsConstructor
 public class Persona {
     @Id
     @GeneratedValue
@@ -26,6 +28,20 @@ public class Persona {
     private Date created_date;
     private String imagen_url;
     private Date termination_date;
+
+    public Persona(String usuario, String password, String name, String surname, String company_email, String personal_email, String city, boolean active, Date created_date, String imagen_url, Date termination_date) {
+        this.usuario = usuario;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.company_email = company_email;
+        this.personal_email = personal_email;
+        this.city = city;
+        this.active = active;
+        this.created_date = created_date;
+        this.imagen_url = imagen_url;
+        this.termination_date = termination_date;
+    }
 
     public void Validador() throws Exception{
 
@@ -65,18 +81,20 @@ public class Persona {
     }
     public Persona DtoToPersona(PersonaInputDto personaInputDto) throws Exception{
         try {
-            Persona persona = new Persona();
-            persona.setUsuario(personaInputDto.getUsuario());
-            persona.setPassword(personaInputDto.getPassword());
-            persona.setName(personaInputDto.getName());
-            persona.setSurname(personaInputDto.getSurname());
-            persona.setCompany_email(personaInputDto.getCompany_email());
-            persona.setPersonal_email(personaInputDto.getPersonal_email());
-            persona.setCity(personaInputDto.getCity());
-            persona.setActive(personaInputDto.isActive());
-            persona.setCreated_date(personaInputDto.getCreated_date());
-            persona.setImagen_url(personaInputDto.getImagen_url());
-            persona.setTermination_date(personaInputDto.getTermination_date());
+            Persona persona = new Persona(
+                    personaInputDto.usuario(),
+                    personaInputDto.password(),
+                    personaInputDto.name(),
+                    personaInputDto.surname(),
+                    personaInputDto.company_email(),
+                    personaInputDto.personal_email(),
+                    personaInputDto.city(),
+                    personaInputDto.active(),
+                    personaInputDto.created_date(),
+                    personaInputDto.imagen_url(),
+                    personaInputDto.termination_date()
+                    );
+
             persona.Validador();
             return persona;
         }
@@ -87,19 +105,20 @@ public class Persona {
     }
     public PersonaOutputDto PersonaToDto(Persona persona) {
 
-        PersonaOutputDto personaOutputDto = new PersonaOutputDto();
-        personaOutputDto.setUsuario(persona.getUsuario());
-        personaOutputDto.setPassword(persona.getPassword());
-        personaOutputDto.setName(persona.getName());
-        personaOutputDto.setSurname(persona.getSurname());
-        personaOutputDto.setCompany_email(persona.getCompany_email());
-        personaOutputDto.setPersonal_email(persona.getPersonal_email());
-        personaOutputDto.setCity(persona.getCity());
-        personaOutputDto.setActive(persona.isActive());
-        personaOutputDto.setCreated_date(persona.getCreated_date());
-        personaOutputDto.setImagen_url(persona.getImagen_url());
-        personaOutputDto.setTermination_date(persona.getTermination_date());
-        return personaOutputDto;
+
+        return new PersonaOutputDto(
+                persona.getUsuario(),
+                persona.getPassword(),
+                persona.getName(),
+                persona.getSurname(),
+                persona.getCompany_email(),
+                persona.getPersonal_email(),
+                persona.getCity(),
+                persona.isActive(),
+                persona.getCreated_date(),
+                persona.getImagen_url(),
+                persona.getTermination_date()
+                );
     }
 
 }
